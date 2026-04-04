@@ -1,0 +1,117 @@
+# =========================
+# OS / File manager
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDE / Editors
+# =========================
+.vscode/
+.idea/
+*.iml
+
+# =========================
+# Python cache / compiled
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# Virtual environments
+# =========================
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+# Packaging / build
+# =========================
+build/
+dist/
+site/
+.eggs/
+*.egg
+*.egg-info/
+pip-wheel-metadata/
+
+# =========================
+# Testing / coverage / type check
+# =========================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.hypothesis/
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# Environment / secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Local databases / runtime data
+# =========================
+*.sqlite
+*.sqlite3
+*.db
+
+# =========================
+# SQLAlchemy / Alembic
+# =========================
+.alembic/
+
+# =========================
+# Temporary / local files
+# =========================
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# =========================
+# Mac / Linux / misc
+# =========================
+.AppleDouble
+.LSOverride
+
+# =========================
+# PyInstaller
+# =========================
+*.spec
+
+# =========================
+# Optional: GUI / Qt generated files
+# =========================
+*.qrc.py
+ui_*.py
+
+# =========================
+# Optional: Node / frontend inside Python project
+# =========================
+node_modules/
+
+# =========================
+# Optional: project-local settings
+# =========================
+.local/
+.cache/
