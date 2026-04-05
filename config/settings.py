@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "core",
     "clients",
     "trainers",
-    "services_app",
+    "services",
     "bookings",
 ]
 
