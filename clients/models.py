@@ -1,4 +1,7 @@
+from django.core.exceptions import ValidationError
 from django.db import models
+
+from services.models import MembershipPlan
 
 
 class Client(models.Model):
@@ -29,3 +32,56 @@ class Client(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+class ClientMembership(models.Model):
+    ACTIVE = "active"
+    EXPIRED = "expired"
+    FROZEN = "frozen"
+    USED_UP = "used_up"
+
+    STATUS_CHOICES = [
+        (ACTIVE, "Активен"),
+        (EXPIRED, "Истек"),
+        (FROZEN, "Заморожен"),
+        (USED_UP, "Израсходован"),
+    ]
+
+    client = models.ForeignKey(
+        Client,
+        on_delete=models.CASCADE,
+        related_name="memberships",
+        verbose_name="Клиент",
+    )
+    membership_plan = models.ForeignKey(
+        MembershipPlan,
+        on_delete=models.PROTECT,
+        related_name="client_memberships",
+        verbose_name="План абонемента",
+    )
+    start_date = models.DateField("Дата начала")
+    end_date = models.DateField("Дата окончания")
+    remaining_visits = models.PositiveIntegerField(
+        "Осталось посещений",
+        blank=True,
+        null=True,
+    )
+    status = models.CharField(
+        "Статус",
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default=ACTIVE,
+    )
+    created_at = models.DateTimeField("Создан", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Абонемент клиента"
+        verbose_name_plural = "Абонементы клиентов"
+        ordering = ["-start_date"]
+
+    def clean(self):
+        if self.end_date < self.start_date:
+            raise ValidationError("Дата окончания не может быть раньше даты начала.")
+
+    def __str__(self):
+        return f"{self.client.full_name} — {self.membership_plan.name}"
