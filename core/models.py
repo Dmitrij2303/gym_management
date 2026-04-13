@@ -1,3 +1,6 @@
-from django.db import models
+from django.contrib import admin
 
-# Create your models here.
+
+admin.site.site_header = "Система автоматизации фитнес-клуба"
+admin.site.site_title = "Админ-панель фитнес-клуба"
+admin.site.index_title = "Управление данными фитнес-клуба"

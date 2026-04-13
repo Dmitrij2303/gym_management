@@ -77,13 +77,11 @@ CREATE TABLE client_memberships (
 
     CONSTRAINT fk_client_memberships_client
         FOREIGN KEY (client_id) REFERENCES clients(id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
+        ON DELETE CASCADE,
 
     CONSTRAINT fk_client_memberships_plan
         FOREIGN KEY (membership_plan_id) REFERENCES membership_plans(id)
-        ON DELETE RESTRICT
-        ON UPDATE CASCADE,
+        ON DELETE RESTRICT,
 
     CONSTRAINT chk_client_memberships_dates
         CHECK (end_date >= start_date)
@@ -101,8 +99,7 @@ CREATE TABLE trainer_work_slots (
 
     CONSTRAINT fk_trainer_work_slots_trainer
         FOREIGN KEY (trainer_id) REFERENCES trainers(id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
+        ON DELETE CASCADE,
 
     CONSTRAINT chk_trainer_work_slots_time
         CHECK (end_datetime > start_datetime)
@@ -122,13 +119,11 @@ CREATE TABLE sessions (
 
     CONSTRAINT fk_sessions_service
         FOREIGN KEY (service_id) REFERENCES services(id)
-        ON DELETE RESTRICT
-        ON UPDATE CASCADE,
+        ON DELETE RESTRICT,
 
     CONSTRAINT fk_sessions_trainer
         FOREIGN KEY (trainer_id) REFERENCES trainers(id)
-        ON DELETE RESTRICT
-        ON UPDATE CASCADE,
+        ON DELETE RESTRICT,
 
     CONSTRAINT chk_sessions_time
         CHECK (end_datetime > start_datetime),
@@ -143,20 +138,20 @@ CREATE TABLE bookings (
     client_id BIGINT UNSIGNED NOT NULL,
     session_id BIGINT UNSIGNED NOT NULL,
     status ENUM('booked', 'visited', 'canceled', 'missed') NOT NULL DEFAULT 'booked',
+    canceled_by ENUM('client', 'trainer', 'admin') NULL,
+    cancel_reason VARCHAR(255) NOT NULL,
     price_final DECIMAL(10,2) NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_bookings_client
         FOREIGN KEY (client_id) REFERENCES clients(id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
+        ON DELETE CASCADE,
 
     CONSTRAINT fk_bookings_session
         FOREIGN KEY (session_id) REFERENCES sessions(id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
+        ON DELETE CASCADE,
 
-    CONSTRAINT uq_bookings_client_session
+    CONSTRAINT unique_client_session_booking
         UNIQUE (client_id, session_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -172,7 +167,6 @@ CREATE TABLE one_time_visits (
     CONSTRAINT fk_one_time_visits_client
         FOREIGN KEY (client_id) REFERENCES clients(id)
         ON DELETE CASCADE
-        ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
@@ -180,20 +174,9 @@ CREATE INDEX idx_clients_last_first ON clients(last_name, first_name);
 
 CREATE INDEX idx_trainers_last_first ON trainers(last_name, first_name);
 
-CREATE INDEX idx_sessions_service_id ON sessions(service_id);
-CREATE INDEX idx_sessions_trainer_id ON sessions(trainer_id);
-CREATE INDEX idx_sessions_start_datetime ON sessions(start_datetime);
-CREATE INDEX idx_sessions_trainer_time ON sessions(trainer_id, start_datetime, end_datetime);
-
-CREATE INDEX idx_bookings_client_id ON bookings(client_id);
-CREATE INDEX idx_bookings_session_id ON bookings(session_id);
-
-CREATE INDEX idx_client_memberships_client_id ON client_memberships(client_id);
-CREATE INDEX idx_client_memberships_plan_id ON client_memberships(membership_plan_id);
-
-CREATE INDEX idx_trainer_work_slots_trainer_id ON trainer_work_slots(trainer_id);
-CREATE INDEX idx_trainer_work_slots_start_datetime ON trainer_work_slots(start_datetime);
-CREATE INDEX idx_trainer_work_slots_trainer_time ON trainer_work_slots(trainer_id, start_datetime, end_datetime);
-
-CREATE INDEX idx_one_time_visits_client_id ON one_time_visits(client_id);
 CREATE INDEX idx_one_time_visits_visit_date ON one_time_visits(visit_date);
+
+
+-- Проверки, которые сейчас реализованы в Django-моделях и не вынесены в SQL:
+-- 1. У одного тренера занятия не должны пересекаться по времени.
+-- 2. Количество записей со статусами 'booked' и 'visited' не должно превышать capacity занятия.

@@ -45,10 +45,38 @@ class Session(models.Model):
         verbose_name = "Занятие"
         verbose_name_plural = "Занятия"
         ordering = ["start_datetime"]
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(end_datetime__gt=models.F("start_datetime")),
+                name="chk_sessions_time",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(capacity__gt=0),
+                name="chk_sessions_capacity",
+            ),
+        ]
 
     def clean(self):
         if self.end_datetime <= self.start_datetime:
             raise ValidationError("Время окончания должно быть больше времени начала.")
+
+        if not all(
+            [self.trainer_id, self.start_datetime, self.end_datetime]
+        ) or self.status == self.CANCELED:
+            return
+
+        overlapping_sessions = Session.objects.filter(
+            trainer_id=self.trainer_id,
+            start_datetime__lt=self.end_datetime,
+            end_datetime__gt=self.start_datetime,
+        ).exclude(status=self.CANCELED)
+        if self.pk:
+            overlapping_sessions = overlapping_sessions.exclude(pk=self.pk)
+
+        if overlapping_sessions.exists():
+            raise ValidationError(
+                "У тренера уже есть другое занятие, которое пересекается по времени."
+            )
 
     def __str__(self):
         return f"{self.service.name} — {self.start_datetime:%d.%m.%Y %H:%M}"
@@ -124,6 +152,22 @@ class Booking(models.Model):
     def __str__(self):
         return f"{self.client.full_name} -> {self.session}"
 
+    def clean(self):
+        if not self.session_id or self.status not in [self.BOOKED, self.VISITED]:
+            return
+
+        occupied_slots = Booking.objects.filter(
+            session_id=self.session_id,
+            status__in=[self.BOOKED, self.VISITED],
+        )
+        if self.pk:
+            occupied_slots = occupied_slots.exclude(pk=self.pk)
+
+        if occupied_slots.count() >= self.session.capacity:
+            raise ValidationError(
+                {"session": "Нельзя записать клиента: все места на занятии уже заняты."}
+            )
+
 
 class OneTimeVisit(models.Model):
     PAID = "paid"
@@ -156,6 +200,9 @@ class OneTimeVisit(models.Model):
         verbose_name = "Разовое посещение"
         verbose_name_plural = "Разовые посещения"
         ordering = ["-visit_date", "-created_at"]
+        indexes = [
+            models.Index(fields=["visit_date"], name="idx_one_time_visits_visit_date"),
+        ]
 
     def __str__(self):
         return f"{self.client.full_name} — {self.visit_date}"

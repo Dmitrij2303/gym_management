@@ -25,6 +25,9 @@ class Client(models.Model):
         verbose_name = "Клиент"
         verbose_name_plural = "Клиенты"
         ordering = ["last_name", "first_name"]
+        indexes = [
+            models.Index(fields=["last_name", "first_name"], name="idx_clients_last_first"),
+        ]
 
     @property
     def full_name(self):
@@ -78,6 +81,12 @@ class ClientMembership(models.Model):
         verbose_name = "Абонемент клиента"
         verbose_name_plural = "Абонементы клиентов"
         ordering = ["-start_date"]
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(end_date__gte=models.F("start_date")),
+                name="chk_client_memberships_dates",
+            ),
+        ]
 
     def clean(self):
         if self.end_date < self.start_date:

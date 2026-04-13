@@ -28,6 +28,16 @@ class Service(models.Model):
         verbose_name = "Услуга"
         verbose_name_plural = "Услуги"
         ordering = ["name"]
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(default_duration_minutes__gt=0),
+                name="chk_services_duration",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(default_capacity__gt=0),
+                name="chk_services_capacity",
+            ),
+        ]
 
     def __str__(self):
         return self.name
@@ -45,6 +55,17 @@ class MembershipPlan(models.Model):
         verbose_name = "План абонемента"
         verbose_name_plural = "Планы абонементов"
         ordering = ["name"]
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(duration_days__gt=0),
+                name="chk_membership_plans_duration",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(visit_limit__isnull=True)
+                | models.Q(visit_limit__gt=0),
+                name="chk_membership_plans_visit_limit",
+            ),
+        ]
 
     def __str__(self):
         return self.name

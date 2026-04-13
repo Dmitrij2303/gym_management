@@ -26,6 +26,11 @@ class Trainer(models.Model):
         verbose_name = "Тренер"
         verbose_name_plural = "Тренеры"
         ordering = ["last_name", "first_name"]
+        indexes = [
+            models.Index(
+                fields=["last_name", "first_name"], name="idx_trainers_last_first"
+            ),
+        ]
 
     @property
     def full_name(self):
@@ -52,10 +57,18 @@ class TrainerWorkSlot(models.Model):
         verbose_name = "Рабочий слот тренера"
         verbose_name_plural = "Рабочие слоты тренеров"
         ordering = ["start_datetime"]
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(end_datetime__gt=models.F("start_datetime")),
+                name="chk_trainer_work_slots_time",
+            ),
+        ]
 
     def clean(self):
         if self.end_datetime <= self.start_datetime:
-            raise ValidationError("Время окончания должно быть больше времени начала.")
+            raise ValidationError(
+                {"end_datetime": "Время окончания должно быть больше времени начала."}
+            )
 
     def __str__(self):
         return f"{self.trainer.full_name}: {self.start_datetime:%d.%m.%Y %H:%M} - {self.end_datetime:%H:%M}"
