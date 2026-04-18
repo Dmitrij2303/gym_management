@@ -53,7 +53,7 @@ class BookingAdmin(admin.ModelAdmin):
 
 
 @admin.register(OneTimeVisit)
-class OneTimeVisitAdmin(UnicodeInsensitiveSearchAdminMixin, admin.ModelAdmin):
+class OneTimeVisitAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "client",

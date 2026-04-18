@@ -1,0 +1,328 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+    Helios by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="ru">
+    <head>
+        <title>{{ club_name }}</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="{% static 'core/helios/assets/css/main.css' %}" />
+        <noscript><link rel="stylesheet" href="{% static 'core/helios/assets/css/noscript.css' %}" /></noscript>
+    </head>
+    <body class="homepage is-preload">
+        <div id="page-wrapper">
+
+            <div id="header">
+                <div class="inner">
+                    <header>
+                        <h1><a href="{% url 'core:home' %}" id="logo">{{ club_name }}</a></h1>
+                        <hr />
+                        <p>Хватит откладывать себя на потом. Пришло время стать сильнее, легче и увереннее.</p>
+                    </header>
+                    <footer>
+                        <a href="#banner" class="button circled scrolly">Вперёд</a>
+                    </footer>
+                </div>
+
+                <nav id="nav">
+                    <ul>
+                        <li><a href="{% url 'core:home' %}">Главная</a></li>
+                        <li><a href="#banner">О клубе</a></li>
+                        <li><a href="#features">Направления</a></li>
+                        <li><a href="#footer">Контакты</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <section id="banner">
+                <header>
+                    <h2>Добро пожаловать в <strong>{{ club_name }}</strong>.</h2>
+                    <p>
+                        Это не место для пустых обещаний. Это клуб для тех, кто хочет видеть результат в зеркале,
+                        чувствовать силу в теле и перестать каждый понедельник начинать заново.
+                    </p>
+                </header>
+            </section>
+
+            <section class="carousel">
+                <div class="reel">
+
+                    <article>
+                        <a href="#" class="image featured"><img src="{% static 'core/helios/images/pic01.png' %}" alt="Йога" /></a>
+                        <header>
+                            <h3><a href="#">Йога</a></h3>
+                        </header>
+                        <p>Собери тело и голову в одно целое. Больше контроля, гибкости и спокойной силы.</p>
+                    </article>
+
+                    <article>
+                        <a href="#" class="image featured"><img src="{% static 'core/helios/images/pic02.png' %}" alt="Пилатес" /></a>
+                        <header>
+                            <h3><a href="#">Пилатес</a></h3>
+                        </header>
+                        <p>Укрепляй центр тела, выравнивай осанку и перестань разваливаться к концу дня.</p>
+                    </article>
+
+                    <article>
+                        <a href="#" class="image featured"><img src="{% static 'core/helios/images/pic03.png' %}" alt="Кроссфит" /></a>
+                        <header>
+                            <h3><a href="#">Кроссфит</a></h3>
+                        </header>
+                        <p>Мощь, выносливость и характер. Жарко будет всем, сдаваться не получится.</p>
+                    </article>
+
+                    <article>
+                        <a href="#" class="image featured"><img src="{% static 'core/helios/images/pic04.png' %}" alt="Персональные тренировки" /></a>
+                        <header>
+                            <h3><a href="#">Персональные тренировки</a></h3>
+                        </header>
+                        <p>Никакой толпы, никакой случайности. Только твоя цель, твой план и твой результат.</p>
+                    </article>
+
+                    <article>
+                        <a href="#" class="image featured"><img src="{% static 'core/helios/images/pic05.png' %}" alt="Бокс-фитнес" /></a>
+                        <header>
+                            <h3><a href="#">Бокс-фитнес</a></h3>
+                        </header>
+                        <p>Сбрось стресс, включи скорость и почувствуй, как просыпается настоящая энергия.</p>
+                    </article>
+
+                    <article>
+                        <a href="#" class="image featured"><img src="{% static 'core/helios/images/pic06.png' %}" alt="Команда тренеров" /></a>
+                        <header>
+                            <h3><a href="#">Сильные тренеры</a></h3>
+                        </header>
+                        <p>Опыт, внимание к технике и умение дожимать до результата без лишней воды.</p>
+                    </article>
+
+                    <article>
+                        <a href="#" class="image featured"><img src="{% static 'core/helios/images/pic07.png' %}" alt="Результат" /></a>
+                        <header>
+                            <h3><a href="#">Результат, а не видимость</a></h3>
+                        </header>
+                        <p>Минус усталость, плюс тонус, форма и уверенность. За этим сюда и приходят.</p>
+                    </article>
+
+                </div>
+            </section>
+
+            <div class="wrapper style2">
+                <article id="main" class="container special">
+                    <a href="#" class="image featured"><img src="{% static 'core/helios/images/pic08.png' %}" alt="Фитнес клуб" /></a>
+                    <header>
+                        <h2><a href="#">Твоя лучшая форма сама себя не сделает</a></h2>
+                        <p>
+                            Мы собрали в одном клубе самые востребованные форматы: йога, пилатес, кроссфит,
+                            стретчинг, бокс-фитнес и персональные тренировки. Хочешь мягко войти в режим — есть
+                            спокойные и техничные направления. Хочешь жёстко прокачаться — тоже не проблема.
+                        </p>
+                    </header>
+                    <p>
+                        {{ club_name }} — это место, где тренировки становятся частью жизни, а не разовой попыткой
+                        “взяться за себя”. Здесь не обещают магию за неделю. Здесь помогают выстроить систему:
+                        движение, дисциплину, восстановление и реальные изменения в теле. Можно выбрать короткий
+                        стартовый формат на неделю, удобный абонемент на месяц или зайти в серьёзную работу на
+                        несколько месяцев. Главное — начать. Всё остальное добьём вместе.
+                    </p>
+                    <footer>
+                        <a href="#features" class="button">Выбрать направление</a>
+                    </footer>
+                </article>
+            </div>
+
+            <div class="wrapper style1">
+                <section id="features" class="container special">
+                    <header>
+                        <h2>Выбирай свой темп. Цель у нас одна — твой результат.</h2>
+                        <p>Групповые форматы, персональная работа и абонементы под разный ритм жизни.</p>
+                    </header>
+                    <div class="row">
+                        <article class="col-4 col-12-mobile special">
+                            <a href="#" class="image featured"><img src="{% static 'core/helios/images/pic07.jpg' %}" alt="Групповые тренировки" /></a>
+                            <header>
+                                <h3><a href="#">Групповые тренировки</a></h3>
+                            </header>
+                            <p>
+                                Йога, пилатес, кроссфит и стретчинг — отличный выбор, если тебе нужна энергия,
+                                атмосфера и мощный заряд от команды. Вместе проще втянуться и сложнее слиться.
+                            </p>
+                        </article>
+                        <article class="col-4 col-12-mobile special">
+                            <a href="#" class="image featured"><img src="{% static 'core/helios/images/pic08.jpg' %}" alt="Персональный подход" /></a>
+                            <header>
+                                <h3><a href="#">Персональный подход</a></h3>
+                            </header>
+                            <p>
+                                Персональные тренировки и бокс-фитнес подойдут тем, кто хочет максимум внимания,
+                                точную нагрузку и программу под свои задачи: похудение, форма, сила или выносливость.
+                            </p>
+                        </article>
+                        <article class="col-4 col-12-mobile special">
+                            <a href="#" class="image featured"><img src="{% static 'core/helios/images/pic09.jpg' %}" alt="Гибкие абонементы" /></a>
+                            <header>
+                                <h3><a href="#">Гибкие абонементы</a></h3>
+                            </header>
+                            <p>
+                                Можно начать с короткого плана на неделю, взять месяц на 12 посещений, выбрать
+                                безлимит или зайти сразу на 3 месяца. Никаких отмазок — только удобный формат под тебя.
+                            </p>
+                        </article>
+                    </div>
+                </section>
+            </div>
+
+            <div id="footer">
+                <div class="container">
+                    <div class="row">
+
+                        <section class="col-4 col-12-mobile">
+                            <header>
+                                <h2 class="icon solid fa-fire circled"><span class="label">Преимущества</span></h2>
+                            </header>
+                            <ul class="divided">
+                                <li>
+                                    <article class="tweet">
+                                        Тренировки для разного уровня подготовки — от аккуратного старта до серьёзной нагрузки.
+                                        <span class="timestamp">Подходит новичкам и опытным</span>
+                                    </article>
+                                </li>
+                                <li>
+                                    <article class="tweet">
+                                        Направления под разные цели: гибкость, сила, выносливость, тонус и восстановление.
+                                        <span class="timestamp">Не одна программа на всех</span>
+                                    </article>
+                                </li>
+                                <li>
+                                    <article class="tweet">
+                                        Персональная работа для тех, кому нужен быстрый и точный прогресс.
+                                        <span class="timestamp">Фокус на твоей цели</span>
+                                    </article>
+                                </li>
+                                <li>
+                                    <article class="tweet">
+                                        Атмосфера, в которой хочется работать над собой, а не искать повод пропустить.
+                                        <span class="timestamp">Мотивация без дешёвого пафоса</span>
+                                    </article>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section class="col-4 col-12-mobile">
+                            <header>
+                                <h2 class="icon solid fa-file circled"><span class="label">Абонементы</span></h2>
+                            </header>
+                            <ul class="divided">
+                                <li>
+                                    <article class="post stub">
+                                        <header>
+                                            <h3><a href="#">1 неделя / 3 посещения</a></h3>
+                                        </header>
+                                        <span class="timestamp">Чтобы попробовать и втянуться</span>
+                                    </article>
+                                </li>
+                                <li>
+                                    <article class="post stub">
+                                        <header>
+                                            <h3><a href="#">1 месяц / 12 посещений</a></h3>
+                                        </header>
+                                        <span class="timestamp">Удобный ритм без перегруза</span>
+                                    </article>
+                                </li>
+                                <li>
+                                    <article class="post stub">
+                                        <header>
+                                            <h3><a href="#">1 месяц / безлимит</a></h3>
+                                        </header>
+                                        <span class="timestamp">Для тех, кто решил не играться</span>
+                                    </article>
+                                </li>
+                                <li>
+                                    <article class="post stub">
+                                        <header>
+                                            <h3><a href="#">3 месяца / 36 посещений</a></h3>
+                                        </header>
+                                        <span class="timestamp">Серьёзный заход на результат</span>
+                                    </article>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section class="col-4 col-12-mobile">
+                            <header>
+                                <h2 class="icon solid fa-camera circled"><span class="label">Галерея</span></h2>
+                            </header>
+                            <div class="row gtr-25">
+                                <div class="col-6">
+                                    <a href="#" class="image fit"><img src="{% static 'core/helios/images/pic10.jpg' %}" alt="Зал клуба" /></a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="#" class="image fit"><img src="{% static 'core/helios/images/pic11.jpg' %}" alt="Тренировка" /></a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="#" class="image fit"><img src="{% static 'core/helios/images/pic12.jpg' %}" alt="Групповое занятие" /></a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="#" class="image fit"><img src="{% static 'core/helios/images/pic13.jpg' %}" alt="Персональная работа" /></a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="#" class="image fit"><img src="{% static 'core/helios/images/pic14.jpg' %}" alt="Фитнес атмосфера" /></a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="#" class="image fit"><img src="{% static 'core/helios/images/pic15.jpg' %}" alt="Результат тренировок" /></a>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12">
+
+                            <section class="contact">
+                                <header>
+                                    <h3>Хочешь результат — приходи за ним</h3>
+                                </header>
+                                <p>
+                                    Записывайся на тренировку, выбирай удобный формат и перестань откладывать перемены.
+                                    Адрес, телефон, график работы и соцсети можно вывести здесь, чтобы клиенту было
+                                    достаточно одного клика до записи.
+                                </p>
+                                <ul class="icons">
+                                    <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                    <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                                    <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                                    <!-- <li><a href="#" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li> -->
+                                    <!-- <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li> -->
+                                    <!-- <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">Linkedin</span></a></li> -->
+                                </ul>
+                            </section>
+
+                            <div class="copyright">
+                                <ul class="menu">
+                                    <li>&copy; {{ club_name }}. All rights reserved.</li>
+                                    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="{% static 'core/helios/assets/js/jquery.min.js' %}"></script>
+        <script src="{% static 'core/helios/assets/js/jquery.dropotron.min.js' %}"></script>
+        <script src="{% static 'core/helios/assets/js/jquery.scrolly.min.js' %}"></script>
+        <script src="{% static 'core/helios/assets/js/jquery.scrollex.min.js' %}"></script>
+        <script src="{% static 'core/helios/assets/js/browser.min.js' %}"></script>
+        <script src="{% static 'core/helios/assets/js/breakpoints.min.js' %}"></script>
+        <script src="{% static 'core/helios/assets/js/util.js' %}"></script>
+        <script src="{% static 'core/helios/assets/js/main.js' %}"></script>
+
+    </body>
+</html>
